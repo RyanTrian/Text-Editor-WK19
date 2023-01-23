@@ -22,7 +22,7 @@ export const putDb = async (content) => {
   // open the object store
   const objStore = tx.objectStore('jate');
   // use the .put() method to pass in content
-  const req = objStore.put(content)
+  const req = objStore.put({ id: 1, value: content });
   // confirm the data was added
   const res = await req;
   console.log('data saved to the jateDB', res);
@@ -37,11 +37,12 @@ export const getDb = async () => {
   const tx = jateDb.transaction('jate', 'readwrite');
   // open the object store
   const objStore = tx.objectStore('jate');
-  // use the .getAll() method to grab all the content in the DB
-  const req = objStore.getAll()
+  // use the .get() method to grab all the content in the DB
+  const req = objStore.get(1);
   // confirm the data was fetched
   const res = await req;
   console.log('data saved to the jateDB', res);
+  return res?.value;
 };
 
 initdb();
